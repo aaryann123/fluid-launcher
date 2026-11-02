@@ -1,0 +1,9 @@
+{
+  "name": "fluid-launcher",
+  "private": true,
+  "scripts": {
+    "dev": "JAVA_HOME=${JAVA_HOME:-/opt/homebrew/opt/openjdk@21} ./gradlew :app:installRelease && ${ANDROID_HOME:-/opt/homebrew/share/android-commandlinetools}/platform-tools/adb shell cmd package compile -m speed -f app.fluid.launcher",
+    "apk": "JAVA_HOME=${JAVA_HOME:-/opt/homebrew/opt/openjdk@21} ./gradlew :app:assembleRelease && cp app/build/outputs/apk/release/app-release.apk Fluid.apk",
+    "test": "JAVA_HOME=${JAVA_HOME:-/opt/homebrew/opt/openjdk@21} ./gradlew :app:testDebugUnitTest"
+  }
+}

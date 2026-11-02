@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Fluid</string>
+    <string name="lock_service_label">Fluid: double-tap to lock</string>
+    <string name="lock_service_description">Lets Fluid lock the screen when you double-tap the home screen, and open the notification shade when you swipe down. Fluid does not read, collect or send anything on your screen.</string>
+</resources>

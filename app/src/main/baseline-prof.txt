@@ -1,0 +1,3 @@
+# Precompile all of Fluid's own code at install; Compose/AndroidX ship their own profiles.
+HSPLapp/fluid/launcher/**->**(**)**
+Lapp/fluid/launcher/**;

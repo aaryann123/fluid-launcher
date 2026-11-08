@@ -39,6 +39,7 @@ object Store {
     val showClock = bool("show_clock", true)
     val showDate = bool("show_date", true)
     val showGlance = bool("show_glance", true) // next alarm + battery under the date
+    val showMedia = bool("show_media", true) // now playing under the clock, with controls
     val showStatusBar = bool("status_bar", true)
 
     val doubleTapLock = bool("double_tap_lock", true)

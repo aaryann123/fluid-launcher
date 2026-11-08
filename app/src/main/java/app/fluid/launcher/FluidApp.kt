@@ -12,6 +12,7 @@ class FluidApp : Application() {
         super.onCreate()
         Store.init(this)
         Apps.init(this)
+        Media.init(this)
         widgetHost = FluidWidgetHost(this)
         // Lumen's quote widget turns over each time the screen goes off, like a rotating lock screen wallpaper.
         // Screen-off only reaches receivers registered at runtime, and the launcher is the one app always running.
@@ -22,6 +23,7 @@ class FluidApp : Application() {
             override fun onReceive(c: Context, i: Intent) {
                 val (action, cls) = if (i.action == Intent.ACTION_SCREEN_ON) "TICK" to "ClockWidget" else "NEXT" to "QuoteWidget"
                 runCatching { sendBroadcast(Intent("app.lumen.$action").setClassName("app.lumen", "app.lumen.$cls")) }
+                Media.init(this@FluidApp) // fresh now-playing for the lock screen the moment the screen turns on/off
             }
         }, IntentFilter(Intent.ACTION_SCREEN_OFF).apply { addAction(Intent.ACTION_SCREEN_ON) }, ContextCompat.RECEIVER_NOT_EXPORTED)
     }

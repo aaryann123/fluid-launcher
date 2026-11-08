@@ -65,6 +65,7 @@ class MainActivity : ComponentActivity() {
         super.onStart()
         startedAt = SystemClock.uptimeMillis()
         widgets.startListening()
+        Media.init(this) // re-read media sessions: the changed-listener has gone quiet before (new app's session missed)
     }
 
     override fun onRestart() {

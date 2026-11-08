@@ -32,6 +32,7 @@ internal val GLYPHS = mapOf(
     "com.google.android.apps.maps" to "map-trifold", "com.google.android.apps.messaging" to "chat-circle-dots",
     "com.google.android.apps.photos" to "google-photos-logo", "com.google.android.apps.tachyon" to "video-conference",
     "com.google.android.apps.walletnfcrel" to "wallet", "com.google.android.apps.youtube.music" to "music-notes",
+    "com.metrolist.music" to "music-notes", // Muse
     "com.google.android.gm" to "envelope-simple", "com.google.android.googlequicksearchbox" to "google-logo",
     "com.google.android.youtube" to "youtube-logo", "com.instagram.android" to "instagram-logo",
     "com.linkedin.android" to "linkedin-logo", "com.netflix.mediaclient" to "popcorn",
@@ -60,7 +61,7 @@ internal val GLYPH_WORDS = listOf(
     "bank" to "bank", "pay" to "wallet", "wallet" to "wallet", "music" to "music-notes", "radio" to "radio",
     "podcast" to "microphone-stage", "video" to "video-camera", "tv" to "television-simple", "camera" to "camera",
     "photo" to "images", "gallery" to "images", "mail" to "envelope-simple", "chat" to "chat-circle", "messag" to "chat-circle",
-    "phone" to "phone", "map" to "map-trifold", "weather" to "cloud-sun", "news" to "newspaper", "shop" to "shopping-bag",
+    "phone" to "phone", "map" to "map-trifold", "weather" to "cloud-sun", "news" to "newspaper", "brief" to "newspaper", "shop" to "shopping-bag",
     "store" to "shopping-bag", "food" to "fork-knife", "eat" to "fork-knife", "pizza" to "pizza", "ride" to "car",
     "taxi" to "car", "fit" to "barbell", "gym" to "barbell", "health" to "heartbeat", "game" to "game-controller",
     "book" to "book-open", "read" to "book-open", "note" to "note-pencil", "calendar" to "calendar-blank", "clock" to "alarm",

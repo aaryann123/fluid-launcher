@@ -20,7 +20,10 @@ object Dots {
  * downloads) don't count, and neither do apps whose badges you've turned off in Samsung settings.
  */
 class DotService : NotificationListenerService() {
-    override fun onListenerConnected() = refresh()
+    override fun onListenerConnected() {
+        refresh()
+        Media.init(this) // notification access just arrived (or came back): media sessions are readable now
+    }
     override fun onListenerDisconnected() { Dots.active = emptySet() }
     override fun onNotificationPosted(sbn: StatusBarNotification?) = refresh()
     override fun onNotificationRemoved(sbn: StatusBarNotification?) = refresh()

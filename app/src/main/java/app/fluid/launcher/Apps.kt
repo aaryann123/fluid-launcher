@@ -240,8 +240,10 @@ object Apps {
                         .setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED or LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST)
                     launcherApps.getShortcuts(q, user)?.firstOrNull()?.let { s ->
                         val d = launcherApps.getShortcutBadgedIconDrawable(s, app.resources.displayMetrics.densityDpi)
-                        // A pinned shortcut wears its app's glyph.
-                        if (halo) Halo.icon(app, parts[2], (s.shortLabel ?: "").toString(), d, px) else d?.toBitmap(px, px)
+                        // A pinned shortcut wears its app's glyph, unless its name has one (a "Daily Brief" web app isn't the browser).
+                        val label = (s.shortLabel ?: "").toString()
+                        if (halo) Halo.icon(app, if (guessGlyph(label) != null) "" else parts[2], label, d.takeIf { guessGlyph(label) == null }, px)
+                        else d?.toBitmap(px, px)
                     }
                 }
                 else -> null

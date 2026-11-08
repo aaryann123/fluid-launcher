@@ -17,6 +17,7 @@ class HaloTest {
         assertEquals("bank", guessGlyph("My Bank"))
         assertEquals("cloud-sun", guessGlyph("Weather Pro"))
         assertEquals("chat-circle", guessGlyph("Messages+"))
+        assertEquals("newspaper", guessGlyph("Daily Brief"))
         assertNull(guessGlyph("Chase")) // no false hit on letters inside a word
         assertNull(guessGlyph("Muse"))
     }

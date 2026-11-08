@@ -473,6 +473,16 @@ private fun HomePane(ui: HomeState, modifier: Modifier) {
             }
     ) {
         val align = alignment()
+        // The dock sits BEHIND the clock column: its gesture LazyColumn fills the screen, and a full-screen
+        // pointerInput in front would block hit-testing for every clickable underneath (clock, now playing).
+        // It only accepts downs inside its own strip, so being behind loses it nothing.
+        if (Store.favorites.value.isNotEmpty()) Dock(ui, Modifier.fillMaxSize()
+            .windowInsetsPadding(WindowInsets.safeDrawing)
+            .padding(top = 20.dp, bottom = 36.dp)
+            .graphicsLayer {
+                translationX = rubberBand(ui)
+                alpha = 1f - (-ui.pull.value / (PULL_ARM_DP * density)).coerceIn(0f, 1f) // the pull hint takes its place
+            })
         Column(
             Modifier.fillMaxSize()
                 .windowInsetsPadding(WindowInsets.safeDrawing)
@@ -481,18 +491,12 @@ private fun HomePane(ui: HomeState, modifier: Modifier) {
             horizontalAlignment = align,
         ) {
             Clock(align)
+            NowPlaying(align)
             if (Store.favorites.value.isEmpty()) {
                 Spacer(Modifier.weight(1f))
                 Text("Swipe up for apps.\nLong-press one to put it here.", style = p.style(17.sp, color = p.dim))
             }
         }
-        if (Store.favorites.value.isNotEmpty()) Dock(ui, Modifier.fillMaxSize()
-            .windowInsetsPadding(WindowInsets.safeDrawing)
-            .padding(top = 20.dp, bottom = 36.dp)
-            .graphicsLayer {
-                translationX = rubberBand(ui)
-                alpha = 1f - (-ui.pull.value / (PULL_ARM_DP * density)).coerceIn(0f, 1f) // the pull hint takes its place
-            })
         PullHint(ui, Modifier.align(Alignment.CenterEnd).padding(end = 20.dp))
         HoldBar(ui, Modifier.align(Alignment.BottomCenter))
     }
@@ -605,7 +609,7 @@ private fun openClock(view: View) {
     start(view, clock?.let(pm::getLaunchIntentForPackage) ?: Intent(AlarmClock.ACTION_SHOW_ALARMS))
 }
 
-private val Montserrat = FontFamily(
+internal val Montserrat = FontFamily(
     Font(R.font.montserrat_regular, FontWeight.Normal),
     Font(R.font.montserrat_medium, FontWeight.Medium),
     Font(R.font.montserrat_heavy, FontWeight.ExtraBold),
@@ -909,7 +913,11 @@ fun DockIcon(fav: Favorite, px: Int, modifier: Modifier) {
         return
     }
     val p = LocalPalette.current
-    val icon by produceState(Apps.icons[fav.key], fav.key, Apps.all) { Apps.bigIcon(fav.key, px)?.let { value = it } }
+    // Keyed on the shared drawer icon's instance: every reload (Halo toggle, icon-theme change, app update)
+    // replaces that bitmap, which re-fetches the dock's sharper copy too. Apps.all still covers pinned
+    // shortcuts, which have no entry in the shared map.
+    val small = Apps.icons[fav.key]
+    val icon by produceState(small, fav.key, small, Apps.all, Store.haloIcons.value) { Apps.bigIcon(fav.key, px)?.let { value = it } }
     icon?.let { Image(it, contentDescription = null, modifier = modifier) }
         ?: Box(modifier.background(p.text.copy(alpha = 0.2f), CircleShape), contentAlignment = Alignment.Center) {
             Text(fav.label.take(1).uppercase(), style = p.style(20.sp))

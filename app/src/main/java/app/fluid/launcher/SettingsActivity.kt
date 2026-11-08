@@ -157,6 +157,7 @@ private fun SettingsScreen(resumes: Int) {
             Toggle("Clock", Store.showClock)
             Toggle("Date", Store.showDate)
             Toggle("Next alarm and battery", Store.showGlance)
+            Toggle("Now playing", Store.showMedia, "Current song under the clock, with controls")
             Toggle("Status bar", Store.showStatusBar)
         }
 
